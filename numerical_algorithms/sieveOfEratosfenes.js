@@ -1,26 +1,27 @@
-var arr = [];
+const sieveOfEratosfene = (n) => {
+  var array = [], limit = Math.sqrt(n), result = [];
 
-for (var i = 2; i < 100; i++) {arr[i] = true;}
-
-var p = 2;
-do {
-  for (i = 2 * p; i < 100; i += p) {
-  	arr[i] = false;
+  // Создаю массив от 2 до (n - 1)
+  for (var i = 2; i < n; i++) {
+      array.push(true);
   }
-  
-  for (i = p+1; i < 100; i++) {
-    if (arr[i]) {
-    	break;
-    } else {
-    }
+
+  // Удаляю кратные 2, 3, 5...
+  for (var i = 2; i <= limit; i++) {
+      if (array[i]) {
+          for (var j = i * i; j < n; j += i) {
+              array[j] = false;
+          }
+      }
   }
-  p = i;
-} while (p < 10); // шаг 5
 
-list = arr.map((el,i)=>{
-    if(el===true){
-        return i
-    }
-}).filter(el=>typeof(el)==='number')
+  // Все значения массива [i] true являются простыми числами
+  for (var i = 2; i < n; i++) {
+      if(array[i]) {
+          result.push(i);
+      }
+  }
 
-console.log(list);
+  return result;
+};
+console.log(sieveOfEratosfene(200))
